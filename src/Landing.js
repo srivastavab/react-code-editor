@@ -156,8 +156,10 @@ const Landing = () => {
             </Grid>
             <Grid item xs={4}>
               <Stack direction="column">
-                <LanguagesDropdown onSelectChange={onSelectChange} />
-                <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
+                <Stack direction="row" spacing={2}>
+                  <LanguagesDropdown onSelectChange={onSelectChange} />
+                  <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
+                </Stack>
                 <OutputWindow outputDetails={outputDetails} />
                 <CustomInput customInput={customInput} setCustomInput={setCustomInput}/>
                 <br />
