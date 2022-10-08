@@ -7,7 +7,7 @@ import LanguagesDropdown from "./LanguagesDropdown";
 import ThemeDropdown from "./ThemeDropdown";
 import OutputWindow from "./OutputWindow";
 import CustomInput from "./CustomInput";
-import {Button} from "@mui/material";
+import {Box, Button, Grid, Stack} from "@mui/material";
 import OutputDetails from "./OutputDetails";
 import axios from "axios";
 
@@ -42,6 +42,7 @@ const Landing = () => {
       console.log("ctrlPress", ctrlPress);
       handleCompile();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ctrlPress, enterPress]);
 
   const onChange = (action, data) => {
@@ -72,7 +73,7 @@ const Landing = () => {
         "content-type": "application/json",
         "Content-Type": "application/json",
         "X-RapidAPI-Host": 'judge0-ce.p.rapidapi.com',
-        "X-RapidAPI-Key": 'YOUR_KEY',
+        "X-RapidAPI-Key": 'b517511434msha49fa5e18ae66b2p11194cjsn52ff21f83779',
       },
       data: formData,
     };
@@ -104,7 +105,7 @@ const Landing = () => {
       params: { base64_encoded: "true", fields: "*" },
       headers: {
         "X-RapidAPI-Host": 'judge0-ce.p.rapidapi.com',
-        "X-RapidAPI-Key": 'YOUR_KEY',
+        "X-RapidAPI-Key": 'b517511434msha49fa5e18ae66b2p11194cjsn52ff21f83779',
       },
     };
     try {
@@ -140,25 +141,40 @@ const Landing = () => {
     }
   }
   useEffect(() => {
-    defineTheme("oceanic-next").then((_) =>
-      setTheme({ value: "oceanic-next", label: "Oceanic Next" })
+    defineTheme("dracula").then((_) =>
+      setTheme({ value: "dracula", label: "Dracula" })
     );
   }, []);
 
   return (
     <>
-      <LanguagesDropdown onSelectChange={onSelectChange} />
-      <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
-      <CodeEditorWindow onChange={onChange} language={language?.value} code={code} theme={theme.value}/>
-      <OutputWindow outputDetails={outputDetails} />
-      <CustomInput customInput={customInput} setCustomInput={setCustomInput}/>
-      <Button
-        onClick={handleCompile}
-        disabled={!code}
-      >
-        {processing ? 'Processing' : 'Compile and Execute'}
-      </Button>
-      {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+      <div>
+        <Box sx={{m: 2}}>
+          <Grid container spacing={2}>
+            <Grid item xs={8}>
+              <CodeEditorWindow onChange={onChange} language={language?.value} code={code} theme={theme.value}/>
+            </Grid>
+            <Grid item xs={4}>
+              <Stack direction="column">
+                <LanguagesDropdown onSelectChange={onSelectChange} />
+                <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
+                <OutputWindow outputDetails={outputDetails} />
+                <CustomInput customInput={customInput} setCustomInput={setCustomInput}/>
+                <br />
+                <Button
+                  onClick={handleCompile}
+                  disabled={!code}
+                  color="primary"
+                  variant="contained"
+                >
+                  {processing ? 'Processing' : 'Compile and Execute'}
+                </Button>
+                {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+              </Stack>
+            </Grid>
+          </Grid>
+        </Box>
+      </div>
     </>
   );
 }
