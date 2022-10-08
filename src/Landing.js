@@ -24,7 +24,7 @@ const Landing = () => {
   const [code, setCode] = useState(javaDefault);
   const [customInput, setCustomInput] = useState('');
   const [outputDetails, setOutputDetails] = useState(null);
-  const [processing, setProcessing] = useState(null);
+  const [processing, setProcessing] = useState(false);
   const [theme, setTheme] = useState("cobalt");
   const [language, setLanguage] = useState(languageOptions[25]);
 
@@ -59,6 +59,7 @@ const Landing = () => {
 
   const handleCompile = () => {
     setProcessing(true);
+    setOutputDetails(null);
     const formData = {
       language_id: language.id,
       // encode source code in base64
@@ -165,7 +166,7 @@ const Landing = () => {
                 <br />
                 <Button
                   onClick={handleCompile}
-                  disabled={!code}
+                  disabled={!code || processing}
                   color="primary"
                   variant="contained"
                 >
